@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Painting Editor</title>
+    <link rel="stylesheet" href="/static/chat-client.css">
+</head>
+<body>
+<div class="container">
+    <div class="painting-list" id="paintingList">
+        <h4>Paintings</h4>
+        <!-- Paintings go here w javascript -->
+    </div>
+
+    <div class="editor-section">
+        <div class="panel-header">
+            <h3>Edit Painting</h3>
+        </div>
+        <div class="panel-body">
+            <form id="paintingForm">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="artist">Artist:</label>
+                    <input type="text" id="artist" name="artist" />
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="number" id="year" name="year" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medium">Medium:</label>
+                    <input type="text" id="medium" name="medium" />
+                </div>
+
+                <div class="form-group">
+                    <label for="gallery">Gallery:</label>
+                    <input type="text" id="gallery" name="gallery" />
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="button" id="saveBtn" class="primary-btn">Save</button>
+                    <button type="reset" class="secondary-btn">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
