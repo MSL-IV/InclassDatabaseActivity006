@@ -57,6 +57,37 @@
     </div>
 </div>
 
+<script>
+    // Fetch paintings from the API and display them in the painting list
+    async function fetchPaintings() {
+        try {
+            const response = await fetch('/api/paintings');
+            const paintings = await response.json();
+            const paintingList = document.getElementById('paintingList');
+
+            // Clear existing content
+            paintingList.innerHTML = "<h4>Paintings</h4>";
+
+            // Add each painting to the list
+            paintings.forEach(painting => {
+                const paintingDiv = document.createElement('div');
+                paintingDiv.className = 'painting-item';
+                paintingDiv.innerHTML = `
+                    <strong>${painting.Title}</strong><br>
+                    Artist: ${painting.LastName}<br>
+                    Year: ${painting.YearOfWork}<br><br>
+                `;
+                paintingList.appendChild(paintingDiv);
+            });
+        } catch (error) {
+            console.error('Error fetching paintings:', error);
+        }
+    }
+
+    // Load paintings when the page loads
+    window.onload = fetchPaintings;
+</script>
+
 <script src="app.js"></script>
 </body>
 </html>
