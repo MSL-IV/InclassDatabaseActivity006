@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadPainting(painting) {
+        document.getElementById('paintingID').value = painting._id;
         document.getElementById('title').value = painting.Title;
         document.getElementById('artist').value = `${painting.FirstName || ''} ${painting.LastName}`.trim();
         document.getElementById('year').value = painting.YearOfWork;
@@ -26,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     document.getElementById('saveBtn').addEventListener('click', async () => {
+        const paintingID = document.getElementById('paintingID').value;
+        console.log('Saving painting with ID:', paintingID);
         const updatedPainting = {
             Title: document.getElementById('title').value,
             FirstName: document.getElementById('artist').value.split(' ')[0],
@@ -36,13 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
             GalleryName: document.getElementById('gallery').value,
         };
 
-        await fetch(`/api/paintings/${updatedPainting.PaintingID}`, {
+        const response = await fetch(`/api/paintings/${paintingID}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedPainting),
         });
 
-        alert('Painting updated successfully!');
+        if (response.ok) {
+            alert('Painting updated successfully!');
+            loadPaintings(); // Refresh painting list (optional)
+        } else {
+            alert('Failed to update painting');
+        }
     });
 
     loadPaintings();

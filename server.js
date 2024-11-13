@@ -32,5 +32,25 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'chat-client.html'));
 });
 
+app.put('/api/paintings/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedPainting = req.body;
+        console.log('Updating painting with ID:', id);
+        console.log('Updated data:', updatedPainting);
+
+        const painting = await Painting.findByIdAndUpdate(id, updatedPainting, { new: true });
+        if (!painting) {
+            console.log('Painting not found');
+            return res.status(404).send('Painting not found');
+        }
+
+        res.json(painting);
+    } catch (error) {
+        console.log('Error updating painting:', error);
+        res.status(500).send('Error updating painting');
+    }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

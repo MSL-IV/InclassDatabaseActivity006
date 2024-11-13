@@ -18,6 +18,7 @@
         </div>
         <div class="panel-body">
             <form id="paintingForm">
+                <input type="hidden" id="paintingID" />
                 <div class="form-group">
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title" />
@@ -93,6 +94,7 @@
 
     // Function to populate form with painting data
     function populateForm(painting) {
+        document.getElementById('paintingID').value = painting._id || '';
         document.getElementById('title').value = painting.Title;
         document.getElementById('firstName').value = painting.FirstName || '';
         document.getElementById('lastName').value = painting.LastName || '';
@@ -106,6 +108,6 @@
     window.onload = fetchPaintings;
 </script>
 
-<script src="app.js"></script>
+<script src="chat-server.js"></script>
 </body>
 </html>
