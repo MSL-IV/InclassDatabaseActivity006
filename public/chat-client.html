@@ -64,33 +64,51 @@
 </div>
 
 <script>
-    // Fetch paintings from the API and display them in the painting list
+    //Fetch paintings from the API and display them in the painting list
     async function fetchPaintings() {
         try {
             const response = await fetch('/api/paintings');
             const paintings = await response.json();
             const paintingList = document.getElementById('paintingList');
 
-            // Clear existing content
+            //Clear existing content
             paintingList.innerHTML = "<h4>Paintings</h4>";
 
-            // Add each painting as a button
+            //Add each painting as a button
             paintings.forEach(painting => {
+                const paintingContainer = document.createElement('div');
+                paintingContainer.className = 'painting-container';
+
+                const imageFileName = painting.ImageFileName || 'manatee.jpg';
+
+                const paintingImage = document.createElement('img');
+                paintingImage.src = `/static/images/${imageFileName}`;
+                paintingImage.className = 'painting-thumbnail';
+
+                paintingImage.onerror = () => {
+                    paintingImage.src = '/static/images/manatee.jpg';
+                };
+
                 const paintingButton = document.createElement('button');
-                paintingButton.className = 'painting-item';
-                paintingButton.innerHTML = `
+                paintingButton.className = 'painting-button';paintingButton.innerHTML = `
                     <strong>${painting.Title}</strong><br>
-                    Artist: ${((painting.FirstName || '')+ " "+painting.LastName).trim()}<br>
+                    Artist: ${((painting.FirstName || '') + " " + painting.LastName).trim()}<br>
                     Year: ${painting.YearOfWork}<br><br>
                 `;
-                paintingButton.onclick = () => populateForm(painting); // Set onclick to populate form
+                paintingButton.onclick = () => populateForm(painting);
 
-                paintingList.appendChild(paintingButton);
+                //Append image and button to the container
+                paintingContainer.appendChild(paintingImage);
+                paintingContainer.appendChild(paintingButton);
+
+                //Add container to the painting list
+                paintingList.appendChild(paintingContainer);
             });
         } catch (error) {
             console.error('Error fetching paintings:', error);
         }
     }
+
 
     // Function to populate form with painting data
     function populateForm(painting) {

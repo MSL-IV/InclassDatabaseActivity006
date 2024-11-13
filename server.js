@@ -7,7 +7,7 @@ const app = express();
 // MongoDB connection string - use your MongoDB Atlas URI
 const uri = 'mongodb+srv://nathanielfrait:8UMenCzPs5Aw2faP@nfmlactivity6.uy4d5.mongodb.net/Paintings';
 
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(uri)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log('MongoDB connection error:', err));
 
