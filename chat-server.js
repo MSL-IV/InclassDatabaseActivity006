@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const paintingForm = document.getElementById('paintingForm');
 
     async function loadPaintings() {
-        //Set this api link to the one we make
         const response = await fetch('/api/paintings');
         const paintings = await response.json();
 
@@ -30,13 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const paintingID = document.getElementById('paintingID').value;
         console.log('Saving painting with ID:', paintingID);
         const updatedPainting = {
-            Title: document.getElementById('title').value,
-            FirstName: document.getElementById('artist').value.split(' ')[0],
-            LastName: document.getElementById('artist').value.split(' ')[1] || '',
-            YearOfWork: parseInt(document.getElementById('year').value, 10),
-            Description: document.getElementById('description').value,
-            Medium: document.getElementById('medium').value,
-            GalleryName: document.getElementById('gallery').value,
+            Title: document.getElementById('title').value || 'Unknown Title',
+            FirstName: document.getElementById('firstName').value || '',
+            LastName: document.getElementById('lastName').value || '',
+            YearOfWork: parseInt(document.getElementById('year').value, 9999),
+            Description: document.getElementById('description').value || '',
+            Medium: document.getElementById('medium').value || '',
+            GalleryName: document.getElementById('gallery').value || '',
         };
 
         const response = await fetch(`/api/paintings/${paintingID}`, {
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.ok) {
             alert('Painting updated successfully!');
-            loadPaintings(); // Refresh painting list (optional)
+            loadPaintings();
         } else {
             alert('Failed to update painting');
         }
