@@ -36,18 +36,18 @@ app.put('/api/paintings/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const updatedPainting = req.body;
-        console.log('Updating painting with ID:', id);
-        console.log('Updated data:', updatedPainting);
+
+        console.log('Updating painting with ID:', id);  // Debug: Log ID
+        console.log('Updated data:', updatedPainting);   // Debug: Log data
 
         const painting = await Painting.findByIdAndUpdate(id, updatedPainting, { new: true });
         if (!painting) {
-            console.log('Painting not found');
             return res.status(404).send('Painting not found');
         }
 
         res.json(painting);
     } catch (error) {
-        console.log('Error updating painting:', error);
+        console.error('Error updating painting:', error);
         res.status(500).send('Error updating painting');
     }
 });

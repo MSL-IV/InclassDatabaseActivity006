@@ -26,29 +26,33 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     document.getElementById('saveBtn').addEventListener('click', async () => {
-        const paintingID = document.getElementById('paintingID').value;
-        console.log('Saving painting with ID:', paintingID);
+        const paintingID = document.getElementById('paintingID').value; // Retrieve PaintingID from hidden input
         const updatedPainting = {
-            Title: document.getElementById('title').value || 'Unknown Title',
-            FirstName: document.getElementById('firstName').value || '',
-            LastName: document.getElementById('lastName').value || '',
-            YearOfWork: parseInt(document.getElementById('year').value, 9999),
-            Description: document.getElementById('description').value || '',
-            Medium: document.getElementById('medium').value || '',
-            GalleryName: document.getElementById('gallery').value || '',
+            Title: document.getElementById('title').value,
+            FirstName: document.getElementById('firstName').value,
+            LastName: document.getElementById('lastName').value,
+            YearOfWork: parseInt(document.getElementById('year').value, 10),
+            Description: document.getElementById('description').value,
+            Medium: document.getElementById('medium').value,
+            GalleryName: document.getElementById('gallery').value,
         };
-
-        const response = await fetch(`/api/paintings/${paintingID}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedPainting),
-        });
-
-        if (response.ok) {
-            alert('Painting updated successfully!');
-            loadPaintings();
-        } else {
-            alert('Failed to update painting');
+    
+        try {
+            const response = await fetch(`/api/paintings/${paintingID}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedPainting),
+            });
+    
+            if (response.ok) {
+                alert('Painting updated successfully!');
+                fetchPaintings(); // Optionally refresh the painting list
+            } else {
+                alert('Failed to update painting');
+            }
+        } catch (error) {
+            console.error('Error updating painting:', error);
+            alert('Error updating painting. Please check the console for details.');
         }
     });
 
